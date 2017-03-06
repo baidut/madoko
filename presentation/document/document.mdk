@@ -1,10 +1,10 @@
 [INCLUDE=presentation]
-Title         : Demo presentation in Madoko
-Sub Title     : In both HTML and PDF
-Author        : Daan Leijen
-Affiliation   : Microsoft Research
-Email         : daan@microsoft.com
-Reveal Theme  : sky
+Title         : Matlab Image Processing
+Sub Title     : Basic
+Author        : Zhenqiang Ying
+Affiliation   : PKUSZ
+Email         : yingzhenqiang@gmail.com
+Reveal Theme  : serif
 Beamer Theme  : singapore
 
 [TITLE]
@@ -13,9 +13,9 @@ Beamer Theme  : singapore
 
 [TOC]
 
-# Matlab Image Processing
+# Data
 
-# 了解数据
+首先了解数据
 
 ```
 >> 1+1
@@ -29,7 +29,7 @@ matlab 的默认的数值数据类型为 双精度浮点（double）
 
 > By default, MATLAB stores all numeric values as double-precision floating point.
 
-# 其他类型
+## Data Types
 
 ```
 >> class(true)         % logical
@@ -38,18 +38,24 @@ matlab 的默认的数值数据类型为 双精度浮点（double）
 >> class({1, 'abc'})   % cell
 >> class(@plus)        % function_handle
 ```
-此外还有
+此外还有 结构体 struct，对象 class（表格 table） 
 
-* 结构体 struct
-* 对象 class
-  * 表格 table
-
+~ Begin Framed { padding:1ex; margin-top:1ex }
 注意区分 C++ 中的结构体和对象
 
 * C++ 中两者只有默认访问方式public private的区别
 * matlab 的结构体不支持访问控制继承组合多态等面向对象特性
+~ End Framed
 
-# 当心隐式数据类型转换
+
+## Data type conversion
+
+显示的类型转换
+
+* uint8(255) double类型转为uint8类型
+* char(obj)  对象的字符串化方法
+
+当心隐式数据类型转换
 
 运算结果的类型和值是什么？
 
@@ -62,7 +68,9 @@ matlab 的默认的数值数据类型为 双精度浮点（double）
 >> plus(1,1)
 ```
 
-# 尽量避免不确定性
+## Data type conversion (cont'd)
+
+尽量避免不确定性
 
 ```
 >> 1 + uint8(255)  %   255 (uint8)
@@ -82,23 +90,23 @@ matlab 的默认的数值数据类型为 双精度浮点（double）
      1
 ```
 
-# Fundamental MATLAB Classes 
+## Fundamental MATLAB Classes 
 
 ![](https://cn.mathworks.com/help/matlab/matlab_prog/fundamental_classes.png)
 
 * 数值运算时入乡随俗，其他类型数据要转为 数值类型（double）
 * 默认的平民类型double服从其他数值类型
 
+## Dealing with Data 
 
-# 数据组织
-
-两种容器 container
+数据组织采用两种容器 container
 
 * 数组 array
   * （二维）矩阵 matrix
     * 向量 vector，行向量 row，列向量 column
 * 元胞 cell
 
+## How to organize data
 
 组织策略
 
@@ -106,3 +114,26 @@ matlab 的默认的数值数据类型为 双精度浮点（double）
   * 同类型的**对象**可以用矩阵组织
 * 类型不固定、不相同的用元胞组织
   * 函数句柄为Scalar型，无法用矩阵组织
+* 相关的数据先打包封装，再放入容器
+  * 简单的数据关联——结构体
+  * 数据和操作关联——对象
+
+# Control
+
+流程控制
+
+* section: %%
+* condition: if
+* loop: for, while
+
+# Code
+
+
+
+# OOP
+
+重载 A.fun(p,...) func(A,p,...)
+
+* 覆盖char方法 实现tostring
+* 覆盖disp方法 改变输出方式
+* 覆盖imshow方法 改变图像显示方式
