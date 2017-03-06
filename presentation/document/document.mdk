@@ -45,7 +45,7 @@ matlab 的默认的数值数据类型为 双精度浮点（double）
 
 * C++ 中两者只有默认访问方式public private的区别
 * matlab 的结构体不支持访问控制继承组合多态等面向对象特性
-~ End Framed
+  ~ End Framed
 
 
 ## Data type conversion
@@ -118,6 +118,95 @@ matlab 的默认的数值数据类型为 双精度浮点（double）
   * 简单的数据关联——结构体
   * 数据和操作关联——对象
 
+## Example
+
+一个人有姓名、年龄和性别属性，如何组织数据？
+
+有若干个人，如何组织数据？请选择：
+
+```matlab
+%% 组织方式 1
+names = {'Bob' 'Amy' 'Jack'};
+ages = [8 9 10];
+genders = 'mfm'; % m-male; f-female
+
+%% 组织方式 2
+person.names = {'Bob' 'Amy' 'Jack'};
+person.ages = [8 9 10];
+person.genders = 'mfm'; % m-male; f-female
+
+%% 组织方式 3
+person = struct('name', names, 'age', ages, 'genders', genders);
+
+%% 组织方式 4
+person.Bob = struct('age', 8, 'gender', 'm');
+person.Amy = struct('age', 9, 'gender', 'f');
+person.Jack = struct('age', 10, 'gender', 'm');
+```
+
+## Example (cont'd)
+
+前面的组织方式都不恰当，组织方式3想法对，写法错误
+
+```matlab
+person = struct('name', {'Bob' 'Jack'}, ...
+                'age', {8 10}, ...
+                'gender', 'm');
+%                
+person = struct('name', {'Bob' 'Amy' 'Jack'}, ...
+                'age', {8 9 10}, ...
+                'gender', {'m' 'f' 'm'});
+
+for p = person
+	fprintf('%s is %d years old.\n', p.name, p.age);
+end
+
+person.name
+{person.name}
+[person.age]
+[person.age] = deal(11,12,13); % person(1).age = 11; person(2).age = 12; 
+[person.age] = deal(13); % 13 13 13
+```
+
+## Tips about Image Data
+
+* 二值图像 0 1 logical 建议存储为 bmp 或 mat `0-1写入0-255一片黑`
+* 灰度图像，彩色图像 注意预处理转类型  im2double 或 im2uint8 保证输入类型的一致性
+* imshow 显示 double 类型图像按`[0 1]`区间显示，超过的就是全黑或全白
+  * 用 mat2gray 将数据转到 [0 1] 区间
+  * 用 imshow(x, []) 
+* 保存为 jpg 会对图像进行压缩，建议将标定数据存储为 png 格式
+
+## MPP
+
+https://bitbucket.org/pku_g_team/matlab-utilities
+
+方便显示(ezFig)，输出(ezDump) 图像数据。
+
+```matlab
+    subplot(131); imshow('peppers.png');   title('peppers.png');
+    subplot(132); imshow('cameraman.tif'); title('cameraman.tif');
+    subplot(133); imshow('football.jpg');   title('football.jpg');
+```
+
+可以简化为一行代码 `ezFig peppers.png cameraman.tif football.jpg`
+
+`ezFig img1 img2 img3 ...`
+
+示例：
+
+```matlab
+I = imread('cameraman.tif');
+J = imread('football.jpg');
+ezFig I I./2 (imhist(I)) J(:,:,1)
+```
+
+![](1.jpg)
+
+## Q & A
+
+Any Questions?
+
 # Control
 
 流程控制
@@ -126,14 +215,14 @@ matlab 的默认的数值数据类型为 双精度浮点（double）
 * condition: if
 * loop: for, while
 
-# Code
+# Coding
 
-
-
-# OOP
+## OOP
 
 重载 A.fun(p,...) func(A,p,...)
 
-* 覆盖char方法 实现tostring
-* 覆盖disp方法 改变输出方式
-* 覆盖imshow方法 改变图像显示方式
+- 覆盖char方法 实现tostring
+- 覆盖disp方法 改变输出方式
+- 覆盖imshow方法 改变图像显示方式
+
+# Project
