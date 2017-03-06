@@ -1,0 +1,108 @@
+[INCLUDE=presentation]
+Title         : Demo presentation in Madoko
+Sub Title     : In both HTML and PDF
+Author        : Daan Leijen
+Affiliation   : Microsoft Research
+Email         : daan@microsoft.com
+Reveal Theme  : sky
+Beamer Theme  : singapore
+
+[TITLE]
+
+# Content
+
+[TOC]
+
+# Matlab Image Processing
+
+# 了解数据
+
+```
+>> 1+1
+
+ans =
+
+     2
+
+```
+matlab 的默认的数值数据类型为 双精度浮点（double）
+
+> By default, MATLAB stores all numeric values as double-precision floating point.
+
+# 其他类型
+
+```
+>> class(true)         % logical
+>> class('abc')        % char
+>> class(pi)           % double
+>> class({1, 'abc'})   % cell
+>> class(@plus)        % function_handle
+```
+此外还有
+
+* 结构体 struct
+* 对象 class
+  * 表格 table
+
+注意区分 C++ 中的结构体和对象
+
+* C++ 中两者只有默认访问方式public private的区别
+* matlab 的结构体不支持访问控制继承组合多态等面向对象特性
+
+# 当心隐式数据类型转换
+
+运算结果的类型和值是什么？
+
+```
+>> 1 + uint8(255)
+>> 1 + true
+>> 1 + eps
+>> 1 + single(eps)
+>> plus 1 1
+>> plus(1,1)
+```
+
+# 尽量避免不确定性
+
+```
+>> 1 + uint8(255)  %   255 (uint8)
+>> 1 + true        %      2 (double)
+>> 1 + eps         %     1.0000 (double)
+>> 1 + single(eps) %       1 (single)
+>> plus 1 1        %     98 (double)
+>> plus(1,1)       %      2 (double)
+```
+
+注意 eps 是双精度最小数
+
+```
+>> 1 == 1 + eps
+     0
+>> 1 == 1 + single(eps)
+     1
+```
+
+# Fundamental MATLAB Classes 
+
+![](https://cn.mathworks.com/help/matlab/matlab_prog/fundamental_classes.png)
+
+* 数值运算时入乡随俗，其他类型数据要转为 数值类型（double）
+* 默认的平民类型double服从其他数值类型
+
+
+# 数据组织
+
+两种容器 container
+
+* 数组 array
+  * （二维）矩阵 matrix
+    * 向量 vector，行向量 row，列向量 column
+* 元胞 cell
+
+
+组织策略
+
+* 类型固定、相同的用矩阵组织
+  * 同类型的**对象**可以用矩阵组织
+* 类型不固定、不相同的用元胞组织
+  * 函数句柄为Scalar型，无法用矩阵组织
