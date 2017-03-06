@@ -170,7 +170,7 @@ person.name
 
 ## Tips about Image Data
 
-* 二值图像 0 1 logical 建议存储为 bmp 或 mat `0-1写入0-255一片黑`
+* 二值图像 0 1 (logical) 建议存储为 bmp 或 mat (0-1写入0-255一片黑）
 * 灰度图像，彩色图像 注意预处理转类型  im2double 或 im2uint8 保证输入类型的一致性
 * imshow 显示 double 类型图像按`[0 1]`区间显示，超过的就是全黑或全白
   * 用 mat2gray 将数据转到 [0 1] 区间
@@ -179,7 +179,7 @@ person.name
 
 ## MPP
 
-https://bitbucket.org/pku_g_team/matlab-utilities
+<https://bitbucket.org/pku_g_team/matlab-utilities>
 
 方便显示(ezFig)，输出(ezDump) 图像数据。
 
@@ -189,11 +189,17 @@ https://bitbucket.org/pku_g_team/matlab-utilities
     subplot(133); imshow('football.jpg');   title('football.jpg');
 ```
 
-可以简化为一行代码 `ezFig peppers.png cameraman.tif football.jpg`
+可以简化为一行代码 
+
+```
+ezFig peppers.png cameraman.tif football.jpg
+```
 
 `ezFig img1 img2 img3 ...`
 
-示例：
+## MPP/ezFig 
+
+Example of 
 
 ```matlab
 I = imread('cameraman.tif');
@@ -201,11 +207,13 @@ J = imread('football.jpg');
 ezFig I I./2 (imhist(I)) J(:,:,1)
 ```
 
-![](1.jpg)
+![ezFig-example]
+
+[ezFig-example]: 1.jpg "ezFig-example" { width: 500px }
 
 ## Q & A
 
-Any Questions?
+- Any Questions?
 
 # Control
 
